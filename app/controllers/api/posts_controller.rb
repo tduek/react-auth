@@ -1,11 +1,13 @@
 class Api::PostsController < ApplicationController
-
+  
+  before_action :ensure_user_logged_in
+  
   def index
     @posts = Post.order(created_at: :desc).all
   end
 
   def create
-    @post = Post.create!(post_params)
+    @post = current_user.posts.create!(post_params)
     render :show
   end
 

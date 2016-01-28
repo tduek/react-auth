@@ -1,23 +1,26 @@
 var React = require('react');
 var History = require('react-router').History;
-var UsersStore = require('../../stores/users_store');
-var UsersApiUtil = require('../../util/users_api_util');
+var SessionsApiUtil = require('./../../util/sessions_api_util');
 
-var UserForm = React.createClass({
+var SessionForm = React.createClass({
   mixins: [History],
 
   submit: function (e) {
     e.preventDefault();
-      
-    debugger;
+    
+    var credentials = $(e.currentTarget).serializeJSON();
+    SessionsApiUtil.login(credentials, function () {
+      this.history.pushState({}, "/");
+    }.bind(this));
   },
+  
 
   render: function() {
     
     return (
       <form onSubmit={ this.submit }>
         
-        <h1>Sign Up!</h1>
+        <h1>Logn In!</h1>
         
         <label>
           Email
@@ -29,11 +32,11 @@ var UserForm = React.createClass({
           <input type="password" name="password" />
         </label>
 
-        <button>Join!</button>
+        <button>Log In!</button>
       </form>
     );
   },
 
 });
 
-module.exports = UserForm;
+module.exports = SessionForm;

@@ -31,6 +31,7 @@ var UsersApiUtil = {
       data: attrs,
       success: function (user) {
         UserActions.receiveUser(user);
+        CurrentUserActions.receive
         callback && callback();
       }
     })

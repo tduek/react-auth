@@ -7,19 +7,47 @@ var App = require('./components/app');
 var UsersIndex = require('./components/users/users_index');
 var UserShow = require('./components/users/user_show');
 var PostsIndex = require('./components/posts/posts_index');
+var SessionForm = require('./components/sessions/new');
+var UserForm = require('./components/users/user_form');
+var CurrentUserStore = require('./stores/current_user_store');
 
 var router = (
   <Router>
-    <Route path="/" component={ App }>
-      <IndexRoute component={ UsersIndex } />
-      <Route path="users" component={ UsersIndex } />
+    <Route path="/" component={ App } onEnter={_ensureLoggedIn}>
+      <IndexRoute component={ UsersIndex } onEnter={_ensureLoggedIn} />
+      <Route path="login" component={ SessionForm }/>
+      <Route path="users/new" component={ UserForm } />
       <Route path="users/:id" component={ UserShow } />
       <Route path="posts" component={ PostsIndex } />
     </Route>
-
-    <UsersIndex />
   </Router>
 );
+
+// make `_ensureLoggedIn` the `onEnter` prop of
+// routes that requires User Auth (see line 17)
+function _ensureLoggedIn(nextState, replace, callback) {
+  // the third `callback` arg allows us to do async 
+  // operations before the route runs. Router will wait
+  // for us to call it before actually routing
+  
+  if (CurrentUserStore.userHasBeenFetched()) {
+    _redirectIfNotLoggedIn(); // this function below
+  } else {
+    // currentUser has not been fetched
+    // lets fetch them and then see if 
+    // we have to redirect or not
+    SessionsApiUtil.fetchCurrentUser(_redirectIfNotLoggedIn);
+  }
+  
+  function _redirectIfNotLoggedIn() {
+    if (!CurrentUserStore.isLoggedIn()) {
+      replace({}, "/login");
+      callback();      
+    }
+  }
+};
+
+
 
 window.init = function () {
   ReactDOM.render(router, document.getElementById('content'));
