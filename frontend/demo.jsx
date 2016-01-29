@@ -42,8 +42,10 @@ function _ensureLoggedIn(nextState, replace, callback) {
   function _redirectIfNotLoggedIn() {
     if (!CurrentUserStore.isLoggedIn()) {
       replace({}, "/login");
-      callback();      
     }
+    callback(); // Always call the callback.
+                // The router doesn't actually run the
+                // route until you do call it.
   }
 };
 
