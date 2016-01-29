@@ -12,4 +12,7 @@ class Post < ActiveRecord::Base
   validates :title, presence: true
 
   belongs_to :user
+  
+  include PgSearch
+  multisearchable :against => [:title]
 end

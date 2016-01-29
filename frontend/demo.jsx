@@ -7,6 +7,7 @@ var App = require('./components/app');
 var UsersIndex = require('./components/users/users_index');
 var UserShow = require('./components/users/user_show');
 var PostsIndex = require('./components/posts/posts_index');
+var Search = require('./components/search');
 
 var router = (
   <Router>
@@ -15,6 +16,7 @@ var router = (
       <Route path="users" component={ UsersIndex } />
       <Route path="users/:id" component={ UserShow } />
       <Route path="posts" component={ PostsIndex } />
+      <Route path="search" component={ Search } />
     </Route>
 
     <UsersIndex />

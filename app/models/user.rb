@@ -11,7 +11,10 @@
 #
 
 class User < ActiveRecord::Base
-
+  
+  include PgSearch
+  multisearchable :against => [:email]
+  
   attr_reader :password
 
   validates :email, :password_digest, :session_token, presence: true

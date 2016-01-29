@@ -16,6 +16,9 @@ gem 'react-rails', '~> 1.3.0'
 gem 'flux-rails-assets', '~> 2.1.0'
 gem 'faker'
 
+gem 'pg_search'
+gem 'kaminari'
+
 group :production do
   gem 'rails_12factor'
 end
