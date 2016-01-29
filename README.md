@@ -16,7 +16,7 @@
 [store]: ./frontend/stores/search_results_store.js
 [api_util]: ./frontend/util/search_api_util.js
 [routesrb]: ./config/routes.rb
-[utils_controller]: ./app/controlles/api/utils_controller
+[utils_controller]: ./app/controllers/api/utils_controller.rb
 [jbuilder]: ./app/views/api/utils/search.json.jbuilder
 [gemfile]: ./Gemfile
 [user]: ./app/models/user.rb
